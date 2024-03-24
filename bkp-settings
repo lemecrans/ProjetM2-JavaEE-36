@@ -1,0 +1,60 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
+    <profiles>
+        <profile>
+            <id>stefan</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+
+                <repository>
+                    <id>central</id>
+                    <url>https://repo1.maven.org/maven2</url>
+                    <releases>
+                      <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                      <enabled>false</enabled>
+                    </snapshots>
+                </repository>  
+ 
+                <repository>
+                    <id>spring-milestones</id>
+                    <url>https://repo.springsource.org/libs-milestone/</url>
+                    <releases>
+                      <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                      <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+ 
+                <repository>
+                    <id>jboss</id>
+                    <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+                    <releases>
+                      <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                      <enabled>false</enabled>
+                    </snapshots>
+                </repository>                
+            </repositories>    
+ 
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>central</id>
+                    <url>https://repo1.maven.org/maven2</url>
+                    <releases>
+                      <updatePolicy>never</updatePolicy>
+                    </releases>
+                    <snapshots>
+                      <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository> 
+            </pluginRepositories>
+            
+        </profile>
+    </profiles>    
+</settings>
