@@ -1,6 +1,7 @@
 package services;
 
 import app.gestioncli.entity.Customer;
+import app.gestioncli.entity.Discount;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -26,5 +27,9 @@ public class CustomerManager {
     @Transactional
     public Customer update(Customer customer) {
         return em.merge(customer);
-    }  
+    }
+    public Customer findById(int idCustomer) {  
+        return em.find(Customer.class, idCustomer);  
+    }
+    
 }
