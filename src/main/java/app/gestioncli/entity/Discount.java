@@ -1,34 +1,91 @@
 package app.gestioncli.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.Table;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Collection;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
+/**
+ *
+ * @author 
+ */
 @Entity
-@Table(name = "CUSTOMER")
-public class Discount {
+@Table(name = "DISCOUNT")
+@NamedQueries({
+    @NamedQuery(name = "Discount.findAll", query = "SELECT d FROM Discount d"),
+    @NamedQuery(name = "Discount.findByCode", query = "SELECT d FROM Discount d WHERE d.code = :code"),
+    @NamedQuery(name = "Discount.findByRate", query = "SELECT d FROM Discount d WHERE d.rate = :rate")})
+public class Discount implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "CODE", length = 1)
-    private char code;
+    @Column(name = "CODE")
+    private String code;
+    @Column(name = "RATE")
+    private BigDecimal rate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "discount")
+    private Collection<Customer> customerCollection;
 
-    @Column(name = "RATE", precision = 4, scale = 2)
-    private double rate;
-
-    public char getCode() {
-        return code;
+    public Discount() {
     }
 
-    public double getRate() {
-        return rate;
-    }
-
-    public void setCode(char code) {
+    public Discount(String code) {
         this.code = code;
     }
 
-    public void setRate(double rate) {
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public BigDecimal getRate() {
+        return rate;
+    }
+
+    public void setRate(BigDecimal rate) {
         this.rate = rate;
     }
-    
+
+    public Collection<Customer> getCustomerCollection() {
+        return customerCollection;
+    }
+
+    public void setCustomerCollection(Collection<Customer> customerCollection) {
+        this.customerCollection = customerCollection;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (code != null ? code.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Discount)) {
+            return false;
+        }
+        Discount other = (Discount) object;
+        if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "*******.entities.Discount[ code=" + code + " ]";
+    } 
 }

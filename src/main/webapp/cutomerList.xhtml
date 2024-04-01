@@ -7,29 +7,5 @@
     <h:head>
         <title>Gestion Client</title>
     </h:head>
-    <h:body>
-        <h:form>
-            <p:dataTable value="#{customerBean.customers}" var="item"
-                paginator="true" rows="10"
-                rowsPerPageTemplate="2,4,8,10"
-                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-         </h:form>
-        <h:dataTable value="#{customerBean.customers}"
-               var="item">
-            <h:column>
-               <f:facet name="header">
-                   <h:outputText value="Id"/>
-               </f:facet>
-               <h:outputText value="#{item.customerId}"/>
-            </h:column>
-
-            <h:column>
-               <f:facet name="header">
-                   <h:outputText value="Nom"/>
-               </f:facet>
-               <h:outputText value="#{item.name}"/>
-            </h:column>
-        </h:dataTable>
-    </h:body>
-    <h:outputText value="#{item.discount.code} : #{item.discount.rate} %" />
+    <p:dataTable value="#{customerBean.customers}" var="item" paginator="true" rows="10" rowsPerPageTemplate="2,4,8,10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"/>
 </html>

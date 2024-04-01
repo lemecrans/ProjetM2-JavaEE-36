@@ -1,72 +1,73 @@
 package app.gestioncli.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.Table;
+import java.io.Serializable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "CUSTOMER")
-public class Customer {
+@NamedQueries({
+    @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
+    @NamedQuery(name = "Customer.findByCustomerId", query = "SELECT c FROM Customer c WHERE c.customerId = :customerId"),
+    @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name = :name"),
+    @NamedQuery(name = "Customer.findByAddressline1", query = "SELECT c FROM Customer c WHERE c.addressline1 = :addressline1"),
+    @NamedQuery(name = "Customer.findByAddressline2", query = "SELECT c FROM Customer c WHERE c.addressline2 = :addressline2"),
+    @NamedQuery(name = "Customer.findByCity", query = "SELECT c FROM Customer c WHERE c.city = :city"),
+    @NamedQuery(name = "Customer.findByState", query = "SELECT c FROM Customer c WHERE c.state = :state"),
+    @NamedQuery(name = "Customer.findByPhone", query = "SELECT c FROM Customer c WHERE c.phone = :phone"),
+    @NamedQuery(name = "Customer.findByFax", query = "SELECT c FROM Customer c WHERE c.fax = :fax"),
+    @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email"),
+    @NamedQuery(name = "Customer.findByCreditLimit", query = "SELECT c FROM Customer c WHERE c.creditLimit = :creditLimit")})
+public class Customer implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "CUSTOMER_ID")
-    private int customerId;
-
-    @Column(name = "DISCOUNT_CODE", length = 1, nullable = false)
-    private char discountCode;
-
-    @Column(name = "ZIP", length = 10, nullable = false)
-    private String zip;
-
-    @Column(name = "NAME", length = 30)
+    private Integer customerId;
+    @Column(name = "NAME")
     private String name;
-
-    @Column(name = "ADDRESSLINE1", length = 30)
-    private String addressLine1;
-
-    @Column(name = "ADDRESSLINE2", length = 30)
-    private String addressLine2;
-
-    @Column(name = "CITY", length = 25)
+    @Column(name = "ADDRESSLINE1")
+    private String addressline1;
+    @Column(name = "ADDRESSLINE2")
+    private String addressline2;
+    @Column(name = "CITY")
     private String city;
-
-    @Column(name = "STATE", length = 2)
+    @Column(name = "STATE")
     private String state;
-
-    @Column(name = "PHONE", length = 12)
+    @Column(name = "PHONE")
     private String phone;
-
-    @Column(name = "FAX", length = 12)
+    @Column(name = "FAX")
     private String fax;
-
-    @Column(name = "EMAIL", length = 40)
+    @Column(name = "EMAIL")
     private String email;
-
     @Column(name = "CREDIT_LIMIT")
-    private int creditLimit;
+    private Integer creditLimit;
+    @JoinColumn(name = "DISCOUNT_CODE", referencedColumnName = "CODE")
+    @ManyToOne(optional = false)
+    private Discount discount;
+    @JoinColumn(name = "ZIP", referencedColumnName = "ZIP_CODE")
+    @ManyToOne(optional = false)
+    private MicroMarket zip;
 
-    public int getCustomerId() {
-        return customerId;
+    public Customer() {
     }
 
-    public void setCustomerId(int customerId) {
+    public Customer(Integer customerId) {
         this.customerId = customerId;
     }
 
-    public char getDiscountCode() {
-        return discountCode;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public void setDiscountCode(char discountCode) {
-        this.discountCode = discountCode;
-    }
-
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
     public String getName() {
@@ -77,20 +78,20 @@ public class Customer {
         this.name = name;
     }
 
-    public String getAddressLine1() {
-        return addressLine1;
+    public String getAddressline1() {
+        return addressline1;
     }
 
-    public void setAddressLine1(String addressLine1) {
-        this.addressLine1 = addressLine1;
+    public void setAddressline1(String addressline1) {
+        this.addressline1 = addressline1;
     }
 
-    public String getAddressLine2() {
-        return addressLine2;
+    public String getAddressline2() {
+        return addressline2;
     }
 
-    public void setAddressLine2(String addressLine2) {
-        this.addressLine2 = addressLine2;
+    public void setAddressline2(String addressline2) {
+        this.addressline2 = addressline2;
     }
 
     public String getCity() {
@@ -133,13 +134,53 @@ public class Customer {
         this.email = email;
     }
 
-    public int getCreditLimit() {
+    public Integer getCreditLimit() {
         return creditLimit;
     }
 
-    public void setCreditLimit(int creditLimit) {
+    public void setCreditLimit(Integer creditLimit) {
         this.creditLimit = creditLimit;
     }
 
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
+    }
+
+    public MicroMarket getZip() {
+        return zip;
+    }
+
+    public void setZip(MicroMarket zip) {
+        this.zip = zip;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (customerId != null ? customerId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Customer)) {
+            return false;
+        }
+        Customer other = (Customer) object;
+        if ((this.customerId == null && other.customerId != null) || (this.customerId != null && !this.customerId.equals(other.customerId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "*******.entities.Customer[ customerId=" + customerId + " ]";
+    }
     
 }
